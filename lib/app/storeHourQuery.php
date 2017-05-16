@@ -15,6 +15,7 @@ class storeHourQuery{
   
   public function __construct($args){
     $this->args = wp_parse_args($args, $this->args);
+    $this->days = $this->getDays();
   }
 
   /**
@@ -30,9 +31,6 @@ class storeHourQuery{
    * @return bool
    */
   public function haveDays(){
-    if($this->days === null){
-      $this->getDays();
-    }
     $day_count = count($this->days);
     $have_days = $day_count > 0 ? true : false;
     return $have_days;
