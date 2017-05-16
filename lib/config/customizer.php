@@ -53,7 +53,7 @@ class customizer{
   }
 
   private function combineSettings(){
-    $days = array('default', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday',);
+    $days = array('default', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday',);
     foreach($days as $day){
       $this->settings[$day.'_open_hour'] = array(
         'control_type' => 'esh\config\timePicker',
