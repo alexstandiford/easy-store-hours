@@ -14,12 +14,12 @@ class customizer{
    * @var array
    */
   private $sections = [
-    /*'social_media_integration' => [
-      'title'       => 'Social Media Integrations',
-      'description' => 'Integrate your social media accounts',
-      'priority'    => 90,
-      'capability'  => 'edit_theme_options',
-    ],*/
+    'store_hours' => [
+      'title'       => 'Store Hours',
+      'description' => 'Specify your store hours',
+      'priority'    => 70,
+      'capability'  => 'manage_options',
+    ],
   ];
   /**
    * Registers all settings fields and controls
@@ -28,12 +28,11 @@ class customizer{
    * @var array
    */
   private $settings = [
-    /*'instagram_key'  => [
-      'type'        => 'text',
-      'label'       => 'Instagram Key',
-      'description' => "Add your Instagram key here. Don't have one? <a href='http://services.chrisriversdesign.com/instagram-token' target='blank'>Get one here.</a>",
-      'section'     => 'social_media_integration',
-    ],*/
+    'default_hours' => [
+      'control_type' => 'esh\config\timePicker',
+      'label'        => 'Open',
+      'section'      => 'store_hours',
+    ],
   ];
   /**
    * The singleton instance of the customizer
@@ -65,7 +64,7 @@ class customizer{
   private function getSections(){
     global $wp_customize;
     foreach($this->sections as $section => $values){
-      $wp_customize->add_section('smc_'.$section, $values);
+      $wp_customize->add_section('esh_'.$section, $values);
     }
   }
 
@@ -77,7 +76,7 @@ class customizer{
   private function getFields(){
     global $wp_customize;
     foreach($this->settings as $setting => $value){
-      $wp_customize->add_setting('smc_'.$setting, [
+      $wp_customize->add_setting('esh_'.$setting, [
         'type'    => 'option',
         'default' => $value['default'],
       ]);
@@ -86,20 +85,21 @@ class customizer{
           'label'       => $value['label'],
           'type'        => $value['type'],
           'description' => $value['description'],
-          'section'     => 'smc_'.$value['section'],
-          'settings'    => 'smc_'.$setting,
+          'section'     => 'esh_'.$value['section'],
+          'settings'    => 'esh_'.$setting,
         ];
         if($value['type'] == 'select'){
           $control_args['choices'] = $value['choices'];
         }
-        $wp_customize->add_control('smc_'.$setting, $control_args);
+        $wp_customize->add_control('esh_'.$setting, $control_args);
       }
       else{
         $customizer = $value['control_type'];
-        $wp_customize->add_control(new $customizer($wp_customize, 'logo', [
-          'label'    => 'Upload your logo',
-          'section'  => $value['section'],
-          'settings' => 'smc_'.$setting,
+        $wp_customize->add_control(new $customizer($wp_customize, 'esh_'.$setting, [
+          'label'       => $value['label'],
+          'description' => $value['description'],
+          'section'     => 'esh_'.$value['section'],
+          'settings'    => 'esh_'.$setting,
         ]));
       }
     }

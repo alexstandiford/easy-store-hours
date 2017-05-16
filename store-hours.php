@@ -16,6 +16,7 @@ class esh{
   private static $instance = null;
 
   private $includes = array(
+    'config/timePicker.php',   //Time Picker Customizer Field
     'config/customizer.php',   //Customizer Integration
     'config/option.php',       //Options Wrapper
   );
@@ -44,8 +45,8 @@ class esh{
   private function _defineConstants(){
     define('ESH_URL', plugin_dir_url(__FILE__));
     define('ESH_PATH', plugin_dir_path(__FILE__));
-    define('ESH_ASSETS_URL', ESH_URL.'lib/assets/');
-    define('ESH_ASSETS_PATH', ESH_PATH.'lib/assets/');
+    define('ESH_ASSETS_URL', ESH_URL.'assets/');
+    define('ESH_ASSETS_PATH', ESH_PATH.'assets/');
     define('ESH_TEXT_DOMAIN', 'socialmediacrons');
     define('ESH_PREFIX', 'esh');
   }
