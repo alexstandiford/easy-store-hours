@@ -4,10 +4,12 @@ jQuery(document).ready(function($){
   });
   $('#sub-accordion-section-esh_store_hours').find('.button-secondary').on('click',function(e){
     e.preventDefault();
-    var eshOpenField = $(this).next().find('input');
-    var eshClosedField = $(eshOpenField).next().find('input');
-    var eshClosedCheckbox = $(eshClosedField).next().find('input');
-
+    var eshOpenField = $(this).next();
+    var eshClosedField = $(eshOpenField).next();
+    var eshClosedCheckbox = $(eshClosedField).next();
+    eshOpenField = eshOpenField.find('input');
+    eshClosedField = eshClosedField.find('input');
+    eshClosedCheckbox = eshClosedCheckbox.find('input');
     eshOpenField.val("");
     wp.customize(eshOpenField.attr('id'),function(obj){
       obj.set("");

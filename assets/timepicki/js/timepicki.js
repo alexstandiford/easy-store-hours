@@ -138,8 +138,6 @@
 
           keyevent.preventDefault();
 
-          set_value();
-          close_timepicki();
           // nothing to do here.
           return;
         }
