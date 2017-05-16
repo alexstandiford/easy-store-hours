@@ -36,29 +36,14 @@ class day{
   }
 
   /**
-   * Checks to see if the day is closed
+   * Checks to see if the day is open
    * @return bool
    */
-  public function isClosed(){
+  public function isOpen(){
     $closed = option::get($this->day.'_is_closed');
-    $is_closed = $closed == 'closed' ? true : false;
-    return $is_closed;
-  }
+    $is_open = $closed == 'closed' ? false : true;
 
-  /**
-   * Gets the hours of the given day.
-   * @return array|string
-   */
-  public function getHours(){
-    //Check to see if there is an override on hours for the day. If there isn't, just get the default
-    if($this->hasOverride()){
-      //Check to see if the store is closed that day. If it isn't, get the hours
-      $hours = $this->isClosed() == true ? 'closed' : option::get($this->day.'_hours');
-    }
-    else{
-      $hours = option::get('default_hours');
-    }
-    return $hours;
+    return $is_open;
   }
 
 }
