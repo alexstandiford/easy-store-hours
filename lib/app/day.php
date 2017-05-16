@@ -30,8 +30,13 @@ class day{
    * @return bool
    */
   public function hasOverride(){
-    $overrides = option::get('day_overrides');
-    $has_override = $overrides[$this->day] == true ? true : false;
+    if($this->openHour == false || $this->closedHour == false){
+      $has_override = false;
+    }
+    else{
+      $has_override = true;
+    }
+
     return $has_override;
   }
 
