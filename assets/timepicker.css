@@ -1,3 +1,53 @@
-#customize-theme-controls .customize-pane-child.accordion-section-content{
+#sub-accordion-section-esh_store_hours #customize-theme-controls .customize-pane-child.accordion-section-content{
   overflow:visible;
+}
+
+#sub-accordion-section-esh_store_hours input[readonly]{
+  background-color:white;
+}
+
+#sub-accordion-section-esh_store_hours h2{
+  width:100%;
+  clear:both;
+}
+
+#sub-accordion-section-esh_store_hours .timepicker_wrap{
+  min-width:240px;
+}
+
+#sub-accordion-section-esh_store_hours .customize-control{
+  width:35%;
+  clear:none;
+}
+
+#sub-accordion-section-esh_store_hours [id*="open"]{
+  margin-right:5%;
+}
+
+#sub-accordion-section-esh_store_hours .customize-control-checkbox input{
+  margin-left:5%;
+}
+
+#sub-accordion-section-esh_store_hours .button-secondary{
+  margin-bottom:10px;
+}
+
+#sub-accordion-section-esh_store_hours .heading-monday{
+  margin-top:30px;
+  border-top:1px solid #aaa;
+  padding-top:20px;
+}
+
+#sub-accordion-section-esh_store_hours .customize-control-checkbox{
+  float:left;
+  width:25%;
+  text-align:center;
+}
+
+#sub-accordion-section-esh_store_hours [id*="closed"] .arrow_top{
+  left:160px;
+}
+
+#sub-accordion-section-esh_store_hours [id*="closed"] .timepicker_wrap{
+  left:-140px !important;
 }

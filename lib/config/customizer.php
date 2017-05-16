@@ -13,27 +13,21 @@ class customizer{
    * @format 'section_name' => ['arg' => 'value']
    * @var array
    */
-  private $sections = [
-    'store_hours' => [
+  private $sections = array(
+    'store_hours' => array(
       'title'       => 'Store Hours',
       'description' => 'Specify your store hours',
       'priority'    => 70,
       'capability'  => 'manage_options',
-    ],
-  ];
+    ),
+  );
   /**
    * Registers all settings fields and controls
    * @format 'setting_name' => ['arg' => 'value']
    * if a control_type value is set to a WP control, that control will be created instead of a simple field
    * @var array
    */
-  private $settings = [
-    'default_hours' => [
-      'control_type' => 'esh\config\timePicker',
-      'label'        => 'Open',
-      'section'      => 'store_hours',
-    ],
-  ];
+  private $settings = array();
   /**
    * The singleton instance of the customizer
    * @var null
@@ -53,8 +47,32 @@ class customizer{
    */
   public static function register(){
     self::$instance = new self;
+    self::$instance->combineSettings();
     self::$instance->getSections();
     self::$instance->getFields();
+  }
+
+  private function combineSettings(){
+    $days = array('default', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday',);
+    foreach($days as $day){
+      $this->settings[$day.'_open_hour'] = array(
+        'control_type' => 'esh\config\timePicker',
+        'label'        => 'Open Time',
+        'section'      => 'store_hours',
+        'day'          => $day,
+      );
+      $this->settings[$day.'_closed_hour'] = array(
+        'control_type' => 'esh\config\timePicker',
+        'label'        => 'Closing Time',
+        'section'      => 'store_hours',
+      );
+      $this->settings[$day.'_is_closed'] = array(
+        'type'    => 'checkbox',
+        'label'   => 'Closed',
+        'section' => 'store_hours',
+      );
+
+    }
   }
 
   /**
@@ -76,18 +94,18 @@ class customizer{
   private function getFields(){
     global $wp_customize;
     foreach($this->settings as $setting => $value){
-      $wp_customize->add_setting('esh_'.$setting, [
+      $wp_customize->add_setting('esh_'.$setting, array(
         'type'    => 'option',
         'default' => $value['default'],
-      ]);
+      ));
       if($value['control_type'] == null){
-        $control_args = [
+        $control_args = array(
           'label'       => $value['label'],
           'type'        => $value['type'],
           'description' => $value['description'],
           'section'     => 'esh_'.$value['section'],
           'settings'    => 'esh_'.$setting,
-        ];
+        );
         if($value['type'] == 'select'){
           $control_args['choices'] = $value['choices'];
         }
@@ -95,12 +113,13 @@ class customizer{
       }
       else{
         $customizer = $value['control_type'];
-        $wp_customize->add_control(new $customizer($wp_customize, 'esh_'.$setting, [
+        $wp_customize->add_control(new $customizer($wp_customize, 'esh_'.$setting, array(
           'label'       => $value['label'],
           'description' => $value['description'],
           'section'     => 'esh_'.$value['section'],
           'settings'    => 'esh_'.$setting,
-        ]));
+          'day'         => isset($value['day']) == true ? ucfirst($value['day']) : false,
+        )));
       }
     }
   }

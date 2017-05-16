@@ -33,8 +33,7 @@ class day{
    * @return bool
    */
   public function isClosed(){
-    $closed = option::get('closed_days');
-    $closed = $closed[$this->day];
+    $closed = option::get($this->day.'_is_closed');
     $is_closed = $closed == 'closed' ? true : false;
     return $is_closed;
   }
