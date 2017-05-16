@@ -60,11 +60,13 @@ class customizer{
         'label'        => 'Open Time',
         'section'      => 'store_hours',
         'day'          => $day,
+        'transport'    => 'refresh',
       );
       $this->settings[$day.'_closed_hour'] = array(
         'control_type' => 'esh\config\timePicker',
         'label'        => 'Closing Time',
         'section'      => 'store_hours',
+        'transport'    => 'refresh',
       );
       $this->settings[$day.'_is_closed'] = array(
         'type'    => 'checkbox',

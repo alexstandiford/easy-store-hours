@@ -9,20 +9,30 @@ License: GPL2
 */
 
 namespace esh;
+
 use esh\config\customizer;
+
 if(!defined('ABSPATH')) exit;
 
 class esh{
   private static $instance = null;
 
   private $includes = array(
-    'config/timePicker.php',   //Time Picker Customizer Field
-    'config/customizer.php',   //Customizer Integration
-    'config/option.php',       //Options Wrapper
+    'config/timePicker.php',        //Time Picker Customizer Field
+    'config/customizer.php',        //Customizer Integration
+    'config/option.php',            //Options Wrapper
+    'app/day.php',                  //Grabs individual data for a given day
+    'app/storeHourQuery.php',       //Grabs all of data for a given week
+    'app/storeHours.php',           //Contains most functions that render the content
+  );
+
+  private $shortcodes = array(
+    'esh_get_store_hours' => array('\esh\app\storeHours', 'getShortcode'),
   );
 
   private function __construct(){
   }
+
 
   /**
    * Fires up the plugin.
@@ -33,9 +43,16 @@ class esh{
       self::$instance = new self;
       self::$instance->_defineConstants();
       self::$instance->_includeFiles();
+      self::$instance->_addShortcodes();
     }
 
     return self::$instance;
+  }
+
+  private function _addShortcodes(){
+    foreach($this->shortcodes as $shortcode => $callback){
+      add_shortcode($shortcode, $callback);
+    }
   }
 
   /**

@@ -17,7 +17,7 @@ function register_time_picker_control(){
       wp_enqueue_style('timepicki-style', ESH_ASSETS_URL.'timepicki/css/timepicki.css');
       wp_enqueue_style('customizer-fix', ESH_ASSETS_URL.'timepicker.css');
       wp_enqueue_script('timepicki-script', ESH_ASSETS_URL.'timepicki/js/timepicki.js', array('jquery'), false, true);
-      wp_enqueue_script('timepicker-custom', ESH_ASSETS_URL.'timepicker.js', array('jquery'), false, true);
+      wp_enqueue_script('timepicker-custom', ESH_ASSETS_URL.'timepicker.js', array('timepicki-script'), false, true);
     }
 
     public function render(){
