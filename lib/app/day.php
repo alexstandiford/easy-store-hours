@@ -6,16 +6,23 @@
  */
 
 namespace esh\app;
+
 use esh\config\option;
 
 class day{
 
   public $day = false;
-  public $hours = false;
 
   public function __construct($day){
     $this->day = strtolower($day);
-    $this->hours = $this->getHours();
+    if($this->isOpen()){
+      $this->openHour = option::get($this->day.'_open_hour') == false ? option::get('default_open_hour') : option::get($this->day.'_open_hour');
+      $this->closedHour = option::get($this->day.'_closed_hour') == false ? option::get('default_closed_hour') : option::get($this->day.'_closed_hour');
+    }
+    else{
+      $this->openHour = 'closed';
+      $this->closedHour = 'closed';
+    }
   }
 
   /**
