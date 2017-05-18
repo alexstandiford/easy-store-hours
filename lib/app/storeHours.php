@@ -9,28 +9,50 @@ namespace esh\app;
 
 class storeHours{
 
+  public $currentDay = null;
+
   public function __construct($args = array()){
     $this->query = new storeHourQuery($args);
+    $this->hourSeparator = $this->validateValue($args['separator'], apply_filters('esh_separator', ' - '));
+    $this->beforeHour = $this->validateValue($args['before_hour'], apply_filters('esh_before_hour', ''));
+    $this->afterHour = $this->validateValue($args['after_hour'], apply_filters('esh_after_hour', ''));
+    $this->closedText = $this->validateValue($args['closed_text'], apply_filters('esh_closed_text', 'Closed'));
   }
 
-  public static function getShortcode(){
+  private static function validateValue($value_if_true, $value_if_false){
+    return is_string($value_if_true) ? $value_if_true : $value_if_false;
+  }
+
+  public static function get(){
     $result = '';
     $store_hours = new self();
+    ob_start();
+    include(template::getFile('header'));
     foreach($store_hours->query->days as $day){
-      $result .= ucfirst($day->day);
-      $result .= ": ";
-      if($day->isOpen()){
-        $result .= $day->openHour;
-        $result .= " - ";
-        $result .= $day->closedHour;
-      }
-      else{
-        $result .= "Closed";
-      }
-      $result .= "<br>";
+      $store_hours->currentDay = $day;
+      include(template::getFile('single_item'));
     }
-
+    include(template::getFile('footer'));
+    $result = ob_get_clean();
     return $result;
   }
 
+  public static function getShortcode(){
+    return self::get();
+  }
+
+  public function getHours($day = false, $separator = false, $before = false, $after = false, $closed_text = false){
+    $separator = $this->validateValue($separator, $this->hourSeparator);
+    $before = $this->validateValue($before, $this->beforeHour);
+    $after = $this->validateValue($after, $this->afterHour);
+    $day = is_object($day) ? $day : $this->currentDay;
+    if($day->isOpen()){
+      $hours = $before.$day->openHour.$separator.$day->closedHour.$after;
+    }
+    else{
+      $hours = $this->validateValue($closed_text, $this->closedText);
+    }
+
+    return $hours;
+  }
 }

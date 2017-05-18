@@ -18,6 +18,7 @@ class esh{
   private static $instance = null;
 
   private $includes = array(
+    'app/template.php',             //Handles the default template and template override functionality
     'config/timePicker.php',        //Time Picker Customizer Field
     'config/customizer.php',        //Customizer Integration
     'config/option.php',            //Options Wrapper
@@ -64,7 +65,8 @@ class esh{
     define('ESH_PATH', plugin_dir_path(__FILE__));
     define('ESH_ASSETS_URL', ESH_URL.'assets/');
     define('ESH_ASSETS_PATH', ESH_PATH.'assets/');
-    define('ESH_TEXT_DOMAIN', 'socialmediacrons');
+    define('ESH_TEMPLATE_DIRECTORY', ESH_PATH.'assets/templates/');
+    define('ESH_TEXT_DOMAIN', 'esh');
     define('ESH_PREFIX', 'esh');
   }
 
