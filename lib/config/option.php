@@ -30,7 +30,22 @@ class option{
   }
 
   /**
+   * Gets the hour value of a specified day and type
+   * @param $day: the day of the week to load
+   * @param $type: should be either "open" or "closed"
+   *
+   * @return mixed
+   */
+  public static function getHourValue($day, $type){
+    $day = strtolower($day);
+    $option = self::get($day.'_'.$type.'_hour');
+
+    return $option;
+  }
+
+  /**
    * Helper function for add_option. Adds the prefix to the option value
+   *
    * @param        $option
    * @param string $value
    * @param string $autoload
