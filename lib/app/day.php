@@ -56,11 +56,22 @@ class day{
    * Checks to see if the day is open
    * @return bool
    */
-  public function isOpen(){
-    $closed = option::get($this->day.'_is_closed');
+  public function isOpen($day = false){
+    if(!$day){
+      $day = $this->day;
+    }
+    $closed = option::get($day.'_is_closed');
     $is_open = $closed == 'closed' ? false : true;
 
     return $is_open;
+  }
+
+  /**
+   * Checks to see if the day is closed
+   * @return bool
+   */
+  public function isClosed(){
+    return !$this->isOpen();
   }
 
 
