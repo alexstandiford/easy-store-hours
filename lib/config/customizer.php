@@ -68,11 +68,13 @@ class customizer{
         'section'      => 'store_hours',
         'transport'    => 'refresh',
       );
-      $this->settings[$day.'_is_closed'] = array(
-        'type'    => 'checkbox',
-        'label'   => 'Closed',
-        'section' => 'store_hours',
-      );
+      if($day !== 'default'){
+        $this->settings[$day.'_is_closed'] = array(
+          'type'    => 'checkbox',
+          'label'   => 'Closed',
+          'section' => 'store_hours',
+        );
+      }
 
     }
   }
