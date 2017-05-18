@@ -26,7 +26,6 @@ class storeHours{
   }
 
   public static function get($args){
-    $result = '';
     $store_hours = new self($args);
     ob_start();
     include(template::getFile('header'));
@@ -50,6 +49,17 @@ class storeHours{
     return self::get($args);
   }
 
+  /**
+   * Gets the opening and closing hours of a specified day. Returns a formatted date
+   *
+   * @param bool $day
+   * @param bool $separator
+   * @param bool $before
+   * @param bool $after
+   * @param bool $closed_text
+   *
+   * @return string
+   */
   public function getHours($day = false, $separator = false, $before = false, $after = false, $closed_text = false){
     $separator = $this->validateValue($separator, $this->hourSeparator);
     $before = $this->validateValue($before, $this->beforeHour);
