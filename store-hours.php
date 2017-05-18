@@ -19,16 +19,22 @@ class esh{
 
   private $includes = array(
     'app/template.php',             //Handles the default template and template override functionality
+    'app/cssClassSet.php',          //Handles CSS class parsing for template items
     'config/timePicker.php',        //Time Picker Customizer Field
     'config/customizer.php',        //Customizer Integration
     'config/option.php',            //Options Wrapper
     'app/day.php',                  //Grabs individual data for a given day
     'app/storeHourQuery.php',       //Grabs all of data for a given week
     'app/storeHours.php',           //Contains most functions that render the content
+    'app/widget.php',               //Contains the function that builds the widget
   );
 
   private $shortcodes = array(
     'esh_get_store_hours' => array('\esh\app\storeHours', 'getShortcode'),
+  );
+
+  private $widgets = array(
+    '\esh\app\widget',
   );
 
   private function __construct(){
@@ -45,6 +51,7 @@ class esh{
       self::$instance->_defineConstants();
       self::$instance->_includeFiles();
       self::$instance->_addShortcodes();
+      add_action('widgets_init',array(self::$instance,'_registerWidgets'));
     }
 
     return self::$instance;
@@ -53,6 +60,12 @@ class esh{
   private function _addShortcodes(){
     foreach($this->shortcodes as $shortcode => $callback){
       add_shortcode($shortcode, $callback);
+    }
+  }
+
+  public function _registerWidgets(){
+    foreach($this->widgets as $widget){
+      register_widget($widget);
     }
   }
 
