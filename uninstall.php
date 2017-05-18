@@ -1,7 +1,8 @@
 <?php
 /**
- * Uninstallation script file. Runs when Easy Age Verifier is deleted
+ * Uninstallation script file. Runs when Easy Store Hours is deleted
  */
+//TODO: Test this
 if(!defined('WP_UNINSTALL_PLUGIN')){
   die;
 }
