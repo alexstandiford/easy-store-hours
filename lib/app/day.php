@@ -16,7 +16,7 @@ class day{
   public function __construct($day){
     $this->day = strtolower($day);
     $this->name = ucfirst($this->day);
-    $this->dateFormat = option::get('date_format') == false ? "g:h A" : option::get('date_format');
+    $this->dateFormat = option::get('date_format') == false ? "g:i A" : option::get('date_format');
     if($this->isOpen()){
       $this->openHour = $this->getTime('open');
       $this->closedHour = $this->getTime('closed');
