@@ -15,14 +15,22 @@ class day{
 
   public function __construct($day){
     $this->day = strtolower($day);
+    $this->name = ucfirst($this->day);
+    $this->dateFormat = option::get('date_format') == false ? "g:h A" : option::get('date_format');
     if($this->isOpen()){
-      $this->openHour = option::get($this->day.'_open_hour') == false ? option::get('default_open_hour') : option::get($this->day.'_open_hour');
-      $this->closedHour = option::get($this->day.'_closed_hour') == false ? option::get('default_closed_hour') : option::get($this->day.'_closed_hour');
+      $this->openHour = $this->getTime('open');
+      $this->closedHour = $this->getTime('closed');
     }
     else{
       $this->openHour = 'closed';
       $this->closedHour = 'closed';
     }
+  }
+
+  public function getTime($type){
+    $hour = option::getHourValue($this->day, $type) == false ? option::getHourValue('default', $type) : option::getHourValue($this->day, $type);
+    $time = date($this->dateFormat,strtotime($hour));
+    return $time;
   }
 
   /**
@@ -50,5 +58,6 @@ class day{
 
     return $is_open;
   }
+
 
 }
