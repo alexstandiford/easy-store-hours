@@ -27,8 +27,11 @@ class day{
     }
   }
 
-  public function getTime($type){
-    $hour = option::getHourValue($this->day, $type) == false ? option::getHourValue('default', $type) : option::getHourValue($this->day, $type);
+  public function getTime($type,$day = false){
+    if(!$day){
+      $day = $this->day;
+    }
+    $hour = option::getHourValue($day, $type) == false ? option::getHourValue('default', $type) : option::getHourValue($day, $type);
     $time = date($this->dateFormat,strtotime($hour));
     return $time;
   }
