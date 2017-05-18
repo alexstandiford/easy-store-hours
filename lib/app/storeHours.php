@@ -55,4 +55,38 @@ class storeHours{
 
     return $hours;
   }
+
+  /**
+   * Generates the class for a single store hour item
+   */
+  public function singleClass($extra_classes = array()){
+    $current_day = $this->currentDay->day;
+    $default_classes = apply_filters('esh_single_item_classes', array(
+      'weekend'           => $current_day == "saturday" || $current_day == "sunday",
+      'weekday'           => $current_day != "saturday" && $current_day != "sunday",
+      'day-'.$current_day => isset($this->currentDay),
+      'is-closed'         => $this->currentDay->isClosed(),
+      'abnormal-day'      => $this->currentDay->hasOverride(),
+      'normal-day'        => !$this->currentDay->hasOverride(),
+    ));
+    $args = array_merge($default_classes, $extra_classes);
+    $classes = new cssClassSet($args);
+
+    return $classes->getFilteredClasses();
+  }
+
+  /**
+   * Generates the class for a single store hour item
+   */
+  public function wrapperClass($extra_classes = array()){
+    $default_classes = apply_filters('esh_wrapper_classes', array(
+      'store-hours-wrapper'     => true,
+      'store-hours-shortcode-item' => $this->ranAsShortcode,
+    ));
+    $args = array_merge($default_classes, $extra_classes);
+    $classes = new cssClassSet($args);
+
+    return $classes->getFilteredClasses();
+  }
+
 }

@@ -1,2 +1,2 @@
-<div class="store-hours-wrapper">
+<div <?php echo $store_hours->wrapperClass(); ?>">
   <ul class="store-hours">
