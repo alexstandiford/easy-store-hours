@@ -10,10 +10,12 @@ namespace esh\app;
 
 class storeHourQuery{
 
-  public $args = array('days' => array('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'),);
+  public $args = array();
   public $days = null;
   
   public function __construct($args){
+    //Set the default value for days. Uses the esh_days filter so the user can specify what days are displayed by default
+    $this->args['days'] = apply_filters('esh_days',array('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'));
     $this->args = wp_parse_args($args, $this->args);
     $this->days = $this->getDays();
   }
