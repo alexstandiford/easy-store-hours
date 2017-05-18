@@ -27,12 +27,25 @@ class day{
     }
   }
 
-  public function getTime($type,$day = false){
+  /**
+   * Gets the timestamp of the specified hour. Used for rich snippets
+   * @param $type
+   *
+   * @return false|string
+   */
+  public function getTimestamp($type){
+    return $this->getTime($type,'H:i');
+  }
+
+  public function getTime($type,$format = false,$day = false){
+    if(!$format){
+      $format = $this->dateFormat;
+    }
     if(!$day){
       $day = $this->day;
     }
     $hour = option::getHourValue($day, $type) == false ? option::getHourValue('default', $type) : option::getHourValue($day, $type);
-    $time = date($this->dateFormat,strtotime($hour));
+    $time = date($format,strtotime($hour));
     return $time;
   }
 
@@ -41,8 +54,8 @@ class day{
    * @return bool
    */
   public function hasOverride(){
-    $is_open_hour_overridden = $this->openHour != $this->getTime('open','default');
-    $is_closed_hour_overridden = $this->closedHour != $this->getTime('closed','default');
+    $is_open_hour_overridden = $this->openHour != $this->getTime('open',false,'default');
+    $is_closed_hour_overridden = $this->closedHour != $this->getTime('closed',false,'default');
     if($is_open_hour_overridden || $is_closed_hour_overridden || $this->isClosed()){
       $has_override = true;
     }
