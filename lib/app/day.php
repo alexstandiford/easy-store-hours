@@ -41,13 +41,14 @@ class day{
    * @return bool
    */
   public function hasOverride(){
-    if($this->openHour == false || $this->closedHour == false){
-      $has_override = false;
-    }
-    else{
+    $is_open_hour_overridden = $this->openHour != $this->getTime('open','default');
+    $is_closed_hour_overridden = $this->closedHour != $this->getTime('closed','default');
+    if($is_open_hour_overridden || $is_closed_hour_overridden || $this->isClosed()){
       $has_override = true;
     }
-
+    else{
+      $has_override = false;
+    }
     return $has_override;
   }
 
